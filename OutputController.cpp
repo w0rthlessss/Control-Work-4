@@ -15,13 +15,13 @@ char SaveResults(string msg)
 	return res;
 }
 
-void SaveAll(shared_ptr<Crypt> method, fstream &fout)
-{
-	fout << method->GetName() << endl;
-	fout << "Encrypted: " << method->GetEncrypted() << endl;
-	fout << "Decrypted: " << method->GetDecrypted() << endl;
-	fout.close();
-}
+//void SaveAll(shared_ptr<Crypt> method, fstream &fout)
+//{
+//	fout << method->GetName() << endl;
+//	fout << "Encrypted: " << method->GetEncrypted() << endl;
+//	fout << "Decrypted: " << method->GetDecrypted() << endl;
+//	fout.close();
+//}
 
 string OpenFile(int option, fstream& file)
 {

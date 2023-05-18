@@ -3,7 +3,7 @@
 
 void EncryptMessage(shared_ptr<Crypt> tmp) {
     fstream fout;
-    cout << tmp->GetName() << endl<<endl;
+    cout << tmp->GetName() << endl << endl;
     tmp->ShowInfo();
     int key = 0;
     cout << "Original message: " << tmp->GetOriginal() << endl;
@@ -11,7 +11,7 @@ void EncryptMessage(shared_ptr<Crypt> tmp) {
     if (tmp->GetName() == "<<Caesar cypher>>")  key = GetInt("Enter a key for encrypting:\n>>");
 
     tmp->Encrypt(key);
-    if(tmp->GetKeyE()!=0) cout << "Key for encryption = " << tmp->GetKeyE() << endl;
+    if (tmp->GetKeyE() != 0) cout << "Key for encryption = " << tmp->GetKeyE() << endl;
     cout << "Encrypted message: " << tmp->GetEncrypted() << endl;
     char c = SaveResults("\nDo you want to save encrypted message in the file");
     if (c == 'y') {
@@ -26,9 +26,9 @@ void EncryptMessage(shared_ptr<Crypt> tmp) {
 
         tmp->Decrypt(key);
         cout << "Decrypted message: " << tmp->GetDecrypted() << endl;
-        if (SaveResults("\nDo you want to save whole crypting process in the file") == 'y') {
+        if (SaveResults("Do you want to saveâó decrypted message in the file") == 'y') {
             OpenFile(WorkWithFiles::output, fout);
-            SaveAll(tmp, fout);
+            fout << tmp->GetEncrypted() << endl;
             fout.close();
         }
     }
@@ -104,11 +104,9 @@ void Decrypting(string msg)
     method->Decrypt(keyD);
     cout << "Decrypted message: " << method->GetDecrypted()<<endl;
     
-    if (SaveResults("Do you want to save decoding process in the file") == 'y') {
+    if (SaveResults("Do you want to saveâó decrypted message in the file") == 'y') {
         OpenFile(WorkWithFiles::output, fout);
-
-        fout << method->GetName() << endl;
-        fout << "Encrypted message: " << method->GetEncrypted() << endl;
-        fout << "Decrypted message: " << method->GetDecrypted() << endl;
+        fout << method->GetEncrypted()<<endl;
+        fout.close();
     }
 }
