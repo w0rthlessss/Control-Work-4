@@ -3,7 +3,7 @@
 void IgnoreLine()
 {
 	cin.clear();
-	cin.ignore(numeric_limits<std::streamsize>::max(), '\n');
+	cin.ignore(INT_MAX, '\n');
 }
 
 //считывание целого числа с консоли
@@ -18,11 +18,11 @@ int GetInt(string s) {
 			cout << "\nUse correct values!\n\n";
 			cout << s;
 		}
-		/*else if (tmp <= 0) {
-			cout << "\nValue must be >0\n\n";
+		else if (tmp < 0) {
+			cout << "\nValue must be >=0\n\n";
 			IgnoreLine();
 			cout << s;
-		}*/
+		}
 		else {
 			IgnoreLine();
 			return tmp;
@@ -37,8 +37,9 @@ string GetLine(string s)
 	string b = "";
 	cout << s;
 	do {
+		cout << ">>";
 		getline(cin, b);
-		if (b.empty()) {
+		if (b.empty()){
 			cout << "\nString must not be empty!\n\n";
 			cout << s;
 			continue;
