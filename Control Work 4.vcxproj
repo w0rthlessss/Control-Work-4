@@ -132,8 +132,9 @@
     <ClCompile Include="CryptingProcess.cpp" />
     <ClCompile Include="GetInfo.cpp" />
     <ClCompile Include="Information.cpp" />
-    <ClCompile Include="OutputController.cpp" />
-    <ClCompile Include="Source.cpp" />
+    <ClCompile Include="InputOutputController.cpp" />
+    <ClCompile Include="ModuleTests.cpp" />
+    <ClCompile Include="Start.cpp" />
     <ClCompile Include="UserInterface.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -141,7 +142,8 @@
     <ClInclude Include="Cyphers.h" />
     <ClInclude Include="GetInfo.h" />
     <ClInclude Include="Information.h" />
-    <ClInclude Include="OutputController.h" />
+    <ClInclude Include="InputOutputController.h" />
+    <ClInclude Include="ModuleTests.h" />
     <ClInclude Include="UserInterface.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

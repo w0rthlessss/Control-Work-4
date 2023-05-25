@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Cyphers.h"
-#include "OutputController.h"
+#include "InputOutputController.h"
 
 void EncryptMessage(shared_ptr<Crypt> tmp);
 
