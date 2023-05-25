@@ -1,5 +1,4 @@
 #include "UserInterface.h"
-#include "CryptingProcess.h"
 
 void Continue() {
 	cout << "\nPress enter to continue!\n";
@@ -27,6 +26,9 @@ void WorkWithConsole()
 			Decrypting(msg);
 			break;
 
+		case BottomMenu::back:
+			system("cls");
+			break;
 		default:
 			IncorrectOption();
 			break;
@@ -47,18 +49,20 @@ void WorkWithFile()
 
 		case BottomMenu::encrypt:
 			OpenFile(WorkWithFiles::input, fin);
-			getline(fin, msg);
+			msg = FileInput(fin);
 			Encrypting(msg);
 			break;
 
 		case BottomMenu::decrypt:
 			OpenFile(WorkWithFiles::input, fin);
-			getline(fin, msg);
+			msg = FileInput(fin);
 			Decrypting(msg);
 			break;
+
 		case BottomMenu::back:
 			system("cls");
 			break;
+
 		default:
 			IncorrectOption();
 			break;
