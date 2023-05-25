@@ -83,3 +83,4 @@ char GetChar(string s)
 		else return tmp;
 	}
 }
+

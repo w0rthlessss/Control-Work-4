@@ -5,6 +5,6 @@
 
 char SaveResults(string msg);
 
-void OpenFile(int option, fstream& file);
+void SaveAll(shared_ptr<Crypt> method, fstream &fout);
 
-string FileInput(fstream& fin);
+string OpenFile(int option, fstream& file);

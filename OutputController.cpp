@@ -1,7 +1,5 @@
-#include "InputOutputController.h"
+#include "OutputController.h"
 #include <filesystem>
-
-using namespace filesystem;
 
 char SaveResults(string msg)
 {
@@ -17,7 +15,15 @@ char SaveResults(string msg)
 	return res;
 }
 
-void OpenFile(int option, fstream& file)
+//void SaveAll(shared_ptr<Crypt> method, fstream &fout)
+//{
+//	fout << method->GetName() << endl;
+//	fout << "Encrypted: " << method->GetEncrypted() << endl;
+//	fout << "Decrypted: " << method->GetDecrypted() << endl;
+//	fout.close();
+//}
+
+string OpenFile(int option, fstream& file)
 {
 	string name = "";
 	error_code ec;
@@ -30,40 +36,28 @@ void OpenFile(int option, fstream& file)
 				continue;
 			}
 
-			if (!is_regular_file(name, ec)) {
+			if (!filesystem::is_regular_file(name, ec)) {
 				cout << "\nAdress contains forbidden value. Try another file path!\n";
 				continue;
 			}
-			return;
+			return name;
 		} while (true);
 
 
 	}
 	else {
 		do {
-			name = GetLine("\nEnter the name of file where results will be stored.\nExample: results.txt\n\n");
+			name = GetLine("\nEnter the name of file where results will be stored.\nIf there is data in the file it will be overwritten.\nExample: results.txt\n");
 
-			if (exists(name)) {
-				if (SaveResults("\nFile exists. Do you want to overwrite current data in the file") == 'n') continue;
-			}
+			file.open(name, ios::out, ios::trunc);
 
-			file.open(name, ios::out | ios::trunc);
-
-			if (!is_regular_file(name, ec)) {
+			if (!filesystem::is_regular_file(name, ec)) {
 				cout << "\nAdress contains forbidden value. Try another file path!\n";
 				continue;
 			}
 
-			return;
+			return name;
 		} while (true);
 
 	}
-}
-
-string FileInput(fstream& fin)
-{
-	string tmp = "", res ="";
-	while (getline(fin, tmp)) if (!tmp.empty()) res += tmp + '\n';
-	fin.close();
-	return res;
 }
