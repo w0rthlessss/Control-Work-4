@@ -105,7 +105,7 @@ public:
 
 	virtual void Encrypt(int k) override{
 		keyE = k;
-		encrypted = '1' + Crypt(k, original);
+		encrypted = Crypt(k, original);
 	}
 
 	virtual void Decrypt(int k) override{
@@ -207,7 +207,7 @@ public:
 
 	virtual void Encrypt(int k) override{
 		keyE = k;
-		encrypted = '2' + Crypt(original);
+		encrypted = Crypt(original);
 	}
 
 	virtual void Decrypt(int k) override{
@@ -297,7 +297,7 @@ public:
 
 	virtual void Encrypt(int k) override{
 		keyE = k;
-		encrypted = '3' + EncryptMessage(original);
+		encrypted = EncryptMessage(original);
 	}
 
 	virtual void Decrypt(int k) override{

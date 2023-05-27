@@ -71,33 +71,30 @@ void Decrypting(string msg)
         cout << "\nMessage does not contain any text information. Nothing to decode!\n\n";
         return;
     }
-    fstream fout;
-    int keyD = 0;
-    char key = msg[0];
-    msg.erase(0, 1);
-    shared_ptr<Crypt> tmp = nullptr;
 
-    switch (key) {
-    case '1':
-        tmp = make_shared<Caesar>(msg);
-        keyD = GetInt("\nEnter a key for decrypting:\n>>");
-        break;
-    case '2':
-        tmp = make_shared<Atbash>(msg);
-        break;
-    case '3':
-        tmp = make_shared<Replace>(msg);
-        break;
+    int keyD = 0;
+
+    shared_ptr<Crypt> method = nullptr;
+    fstream fout;
+
+    regex pattern1("L[0-9a-f]{2}", regex_constants::icase), pattern2("C[0-9a-f]{2}", regex_constants::icase);
+    if (regex_search(msg, pattern1) || regex_search(msg, pattern2)) method = make_shared<Replace>(msg);
+
+    else {
+        keyD = GetInt("\nEnter a key for decrypting. If the message don't require any, enter 0:\n>>");
+
+        if (keyD != 0) method = make_shared<Caesar>(msg);
+        else method = make_shared<Atbash>(msg);
     }
 
-    cout << endl << tmp->GetName() << endl;
-    cout << "Encrypted message:" << endl << tmp->GetEncrypted() << endl << endl;
-    tmp->Decrypt(keyD);
-    cout << "Decrypted message:" << endl << tmp->GetDecrypted() << endl;
+    cout << endl << method->GetName() << endl;
+    cout << "Encrypted message:" << endl << method->GetEncrypted() << endl << endl;
+    method->Decrypt(keyD);
+    cout << "Decrypted message:" << endl << method->GetDecrypted() << endl;
     
     if (SaveResults("Do you want to save decrypted message in the file") == 'y') {
         OpenFile(WorkWithFiles::output, fout);
-        fout << tmp->GetDecrypted()<<endl;
+        fout << method->GetDecrypted()<<endl;
         fout.close();
         cout << "\nData was successfully written in the file!\n\n";
     }
