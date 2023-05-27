@@ -32,7 +32,7 @@ bool Test2()
     
     Caesar tmp(original);
     const int key = 21;
-    const string encrypted = "yphw nzlpzixz - wjbzt ajm gdhdozy hdiyn";
+    const string encrypted = "1yphw nzlpzixz - wjbzt ajm gdhdozy hdiyn";
 
     tmp.Encrypt(key);
 
@@ -43,7 +43,9 @@ bool Test2()
 
     tmp.Decrypt(key);
 
-    if (tmp.GetDecrypted() != original) {
+    string decrypted = tmp.GetDecrypted();
+    decrypted.erase(0, 1);
+    if (decrypted != original) {
         cout << "TEST#2 (Caesar Cypher): FAILURE!\nDecrypted message does not match the original one!\n\n";
         return false;
     }
@@ -55,7 +57,7 @@ bool Test2()
 bool Test3()
 {
     Atbash tmp(original);
-    const string encrypted = "wfny hvjfvmxv - yltvb uli ornrgvw nrmwh";
+    const string encrypted = "2wfny hvjfvmxv - yltvb uli ornrgvw nrmwh";
     const int key = 0;
 
     tmp.Encrypt(key);
@@ -67,7 +69,10 @@ bool Test3()
 
     tmp.Decrypt(key);
 
-    if (tmp.GetDecrypted() != original) {
+    string decrypted = tmp.GetDecrypted();
+    decrypted.erase(0, 1);
+
+    if (decrypted != original) {
         cout << "TEST#3 (Atbash Cypher): FAILURE!\nDecrypted message does not match the original one!\n\n";
         return false;
     }
@@ -79,7 +84,7 @@ bool Test3()
 bool Test4()
 {
     Replace tmp(original);
-    const string encrypted = "L03L14L0cL01 L12L04L10L14L04L0dL02L04 - L01L0eL06L04L18 L05L0eL11 L0bL08L0cL08L13L04L03 L0cL08L0dL03L12";
+    const string encrypted = "3L03L14L0cL01 L12L04L10L14L04L0dL02L04 - L01L0eL06L04L18 L05L0eL11 L0bL08L0cL08L13L04L03 L0cL08L0dL03L12";
     const int key = 0;
 
     tmp.Encrypt(key);
@@ -91,8 +96,11 @@ bool Test4()
 
     tmp.Decrypt(key);
 
-    if (tmp.GetDecrypted() != original) {
-        cout << "TEST#3 (Number replace Cypher): FAILURE!\nDecrypted message does not match the original one!\n\n";
+    string decrypted = tmp.GetDecrypted();
+    decrypted.erase(0, 1);
+
+    if (decrypted != original) {
+        cout << "TEST#4 (Number replace Cypher): FAILURE!\nDecrypted message does not match the original one!\n\n";
         return false;
     }
 
