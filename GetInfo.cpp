@@ -71,12 +71,12 @@ char GetChar(string s)
 	while (true) {
 		cin >> tmp;
 		if (tmp == '\n') {
-			cout << "You must type y or n!\n\n";
+			cout << "\nYou must type y or n!\n\n";
 			cout << s;
 			IgnoreLine();
 		}
 		else if (getchar() != '\n') {
-			cout << "Incorrect input! Type only y or n!\n\n";
+			cout << "\nIncorrect input! Type only y or n!\n\n";
 			cout << s;
 			IgnoreLine();
 		}

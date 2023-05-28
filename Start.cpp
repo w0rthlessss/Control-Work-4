@@ -1,33 +1,36 @@
-#include "Cyphers.h"
-#include <Windows.h>
-#define uc unsigned char
-int main() {
+#include "UserInterface.h"
+#include "ModuleTests.h"
 
-	SetConsoleCP(1251);
-	SetConsoleOutputCP(1251);
+int main() {
+	win::SetConsoleCP(1251);
+	win::SetConsoleOutputCP(1251);
 	setlocale(LC_ALL, "rus");
 
-	string o = GetLine("Enter a message:\n>>");
-	//getline(cin, o);
-	//Caesar tmp(o);
-	//Vigenere tmp(o);
-	Atbash tmp(o);
-    
-	cout << tmp.GetName() << endl;
-	cout << "Original: " << tmp.GetOriginal() << endl;
+	int actionTop = 1;
 
-	/*int key1 = GetInt("Enter a key for encrypting:\n>>");
-	cout << "Encrypted: " << tmp.GetEncrypted(key1) << endl;
-	int key2 = GetInt("Enter a key for decrypting:\n>>");
-	cout << "Decrypted: " << tmp.GetDecrypted(key2) << endl;*/
-
-    /*string key1 = GetString("Enter a key for encrypting:\n>>");
-    cout << "Encrypted: " << tmp.GetEncrypted(key1) << endl;
-    string key2 = GetString("Enter a key for decrypting:\n>>");
-    cout << "Decrypted: " << tmp.GetDecrypted(key2) << endl;*/
-
-	cout << "Encrypted: " << tmp.GetEncrypted() << endl;
-	cout << "Decrypted: " << tmp.GetDecrypted() << endl;
-
-	
+	while (actionTop != TopMenu::quit) {
+		Task();
+		Fio();
+		OptionsTop();
+		actionTop = GetInt(">>");
+		switch (actionTop) {
+		case TopMenu::console:
+			WorkWithConsole();
+			break;
+		case TopMenu::file:
+			WorkWithFile();
+			break;
+		case TopMenu::module:
+			LaunchAllTests();
+			system("pause");
+			break;
+		case TopMenu::quit:
+			cout << "Programm finished it's work!\n\n";
+			exit(EXIT_SUCCESS);
+		default:
+			IncorrectOption();
+			break;
+		}
+		system("cls");
+	}
 }
