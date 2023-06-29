@@ -49,20 +49,6 @@ string GetLine(string s)
 
 }
 
-//считывание одного слова
-string GetString(string s) {
-	string tmp = "";
-	do {
-		cout << s;
-		cin >> tmp;
-		if (tmp.empty()) {
-			cout << "\nString must not be empty!\n\n";
-			continue;
-		}
-	} while (tmp.empty());
-	return tmp;
-}
-
 //считывание ответа y/n
 char GetChar(string s)
 {

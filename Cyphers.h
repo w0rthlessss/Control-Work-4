@@ -37,7 +37,7 @@ public:
 		decrypted = "";
 	}
 
-	Crypt(string s) {original = s;}
+	Crypt(string s) { original = s; encrypted = s; }
 
 	virtual ~Crypt() = default;
 
@@ -77,9 +77,9 @@ private:
 		else return tmp;
 	}
 
-	string Crypt(int key, string msg) {
+	string Crypt(int key, string msg, int start) {
 		string tmp = "";
-		for (int i = 0; i < msg.length(); i++) {
+		for (int i = start; i < msg.length(); i++) {
 			uc c = msg[i];
 			if (isalpha(c)) {
 				if (!isCyrillic(tolower(c))) {
@@ -105,12 +105,12 @@ public:
 
 	virtual void Encrypt(int k) override{
 		keyE = k;
-		encrypted = Crypt(k, original);
+		encrypted = '1' + Crypt(k, original, 0);
 	}
 
 	virtual void Decrypt(int k) override{
 		keyD = k;
-		decrypted = Crypt(-k, encrypted);
+		decrypted = Crypt(-k, encrypted, 1);
 	}
 
 	virtual void ShowInfo() override {
@@ -182,9 +182,9 @@ private:
 		else return tmp;
 	}
 
-	string Crypt(string msg) {
+	string Crypt(string msg, int start) {
 		string tmp = "";
-		for (int i = 0; i < msg.length(); i++) {
+		for (int i = start; i < msg.length(); i++) {
 			uc c = msg[i];
 			if (isalpha(tolower(c))) {
 				if (!isCyrillic(tolower(c))) tmp += CryptLetter(c, AlphabetBorders::lLower, AlphabetBorders::lUpper);
@@ -207,12 +207,12 @@ public:
 
 	virtual void Encrypt(int k) override{
 		keyE = k;
-		encrypted = Crypt(original);
+		encrypted = '2' + Crypt(original, 0);
 	}
 
 	virtual void Decrypt(int k) override{
 		keyD = k;
-		decrypted = Crypt(encrypted);
+		decrypted = Crypt(encrypted, 1);
 	}
 
 	virtual void ShowInfo() override {
@@ -246,7 +246,7 @@ private:
 	}
 
 	string EncryptMessage(string msg) {
-		string tmp = "";
+		string tmp = "3";
 		for (int i = 0; i < msg.length(); i++) {
 			uc c = msg[i];
 			if (isalpha(tolower(c))) {
@@ -259,9 +259,9 @@ private:
 		return tmp;
 	}
 
-	string DecryptMessage(string msg) {
+	string DecryptMessage(string msg, int start) {
 		string tmp = "", code ="";
-		for (int i = 0; i < msg.length() - 2; i++) {
+		for (int i = start; i < msg.length() - 2; i++) {
 			uc c = msg[i];
 			code += msg[i + 1]; code += msg[i + 2];
 			switch (c) {
@@ -302,7 +302,7 @@ public:
 
 	virtual void Decrypt(int k) override{
 		keyD = k;
-		decrypted = DecryptMessage(encrypted);
+		decrypted = DecryptMessage(encrypted, 1);
 	}
 
 	virtual void ShowInfo() override {
