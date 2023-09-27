@@ -119,59 +119,6 @@ public:
 	}
 };
 
-
-//class Vigenere : public Crypt {
-//private:
-//	 
-//	uc CryptLetter(bool encrypt, uc c, uc k, int l, int alphSize) {
-//		uc tmp = '\0';
-//		
-//		if (encrypt)  tmp = uc((tolower(c) + tolower(k) - 2 * l) % alphSize + l);
-//		else  tmp = uc((tolower(c) - tolower(k) + alphSize) % alphSize + l);
-//
-//		if (isUpper(c)) return uc(toupper(tmp));
-//		else return tmp;
-//	}
-//
-//	string Crypt(string key, string msg, bool encrypt) {
-//		string tmp = "";
-//		for (int i = 0, j = 0; i < msg.length(); i++) {
-//			uc c = msg[i];
-//			uc k = key[j];
-//			if (isalpha(c)) {
-//				if (!isCyrillic(tolower(c))) {
-//					tmp += CryptLetter(encrypt, c, k, AlphabetBorders::lLower, 26);
-//					j = (j + 1) % key.length();
-//				}
-//				else {
-//					Check(c);
-//					Check(k);
-//					tmp += CryptLetter(encrypt, c, k, AlphabetBorders::cLower, 32);
-//					j = (j + 1) % key.length();
-//				}
-//			}
-//			else tmp += c;
-//		}
-//		return tmp;
-//	}
-//
-//public:
-//
-//	virtual ~Vigenere() = default;
-//
-//	Vigenere(string s) { name = "<<Vigenere cypher>>"; original = s; encrypted = s; }
-//
-//	void Encrypt(string key) {
-//		encrypted = Crypt(key, original, true);
-//	}
-//
-//	void Decrypt(string key) {
-//		decrypted = Crypt(key, encrypted, false);
-//	}
-//	
-//};
-
-
 class Atbash : public Crypt {
 private:
 
