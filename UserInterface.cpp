@@ -17,12 +17,12 @@ void WorkWithConsole()
 		switch (actionBottom) {
 
 		case BottomMenu::encrypt:
-			msg = GetLine("\n\nEnter a message that must be encrypted:\n");
+			msg = ConsoleInput("\n\nEnter a message that must be encrypted:\n");
 			Encrypting(msg);
 			break;
 
 		case BottomMenu::decrypt:
-			msg = GetLine("\n\nEnter a message that must be decrypted:\n");
+			msg = ConsoleInput("\n\nEnter a message that must be decrypted:\n");
 			Decrypting(msg);
 			break;
 
