@@ -20,10 +20,9 @@ char SaveResults(string msg)
 void OpenFile(int option, fstream& file)
 {
 	string name = "";
-	error_code ec;
 	if (option == WorkWithFiles::input) {
 		do {
-			name = GetLine("\nEnter the name of file with data. Example: students.txt\n");
+			name = GetLine("\nEnter the name of file with data. Example: testFile.txt\n");
 
 			if (_access(name.c_str(), 0) == 0) {
 				file.open(name.c_str(), ios::in);
@@ -84,6 +83,8 @@ string ConsoleInput(string msg)
 {
 	cout << msg;
 	string tmp = "tmp", res = "";
-	while (getline(cin, tmp) && !tmp.empty()) res += tmp + '\n';
+	while (getline(cin, tmp) && !tmp.empty()) {
+		cout << ">>"; res += tmp + '\n';
+	}
 	return res;
 }

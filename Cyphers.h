@@ -66,7 +66,7 @@ private:
 	uc CryptLetter(uc c, int key, int l, int r) {
 		uc tmp = '\0';
 		if (tolower(c) + key < l) {
-			tmp = uc(r - (l - (tolower(c) + key))+1);
+			tmp = uc(r - (l - (tolower(c) + key)) +1);
 		}
 		else if (tolower(c) + key > r) {
 			tmp = uc(l + (tolower(c) + key - r) - 1);
@@ -208,7 +208,7 @@ private:
 
 	string DecryptMessage(string msg, int start) {
 		string tmp = "", code ="";
-		for (int i = start; i < msg.length() - 2; i++) {
+		for (size_t i = start; i < msg.length() - 2; i++) {
 			uc c = msg[i];
 			code += msg[i + 1]; code += msg[i + 2];
 			switch (c) {

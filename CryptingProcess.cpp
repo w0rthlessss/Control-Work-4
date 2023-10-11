@@ -21,6 +21,7 @@ void EncryptMessage(shared_ptr<Crypt> tmp) {
         fout << tmp->GetEncrypted() << endl;
         fout.close();
         cout << "\nData was successfully written in the file!\n\n";
+        system("pause");
     }
 }
 
@@ -101,10 +102,11 @@ void Decrypting(string msg)
     method->Decrypt(keyD);
     cout << "Decrypted message:" << endl << method->GetDecrypted() << endl;
     
-    if (SaveResults("Do you want to save decrypted message in the file") == 'y') {
+    if (SaveResults("\nDo you want to save decrypted message in the file") == 'y') {
         OpenFile(WorkWithFiles::output, fout);
         fout << method->GetDecrypted()<<endl;
         fout.close();
         cout << "\nData was successfully written in the file!\n\n";
+        system("pause");
     }
 }
