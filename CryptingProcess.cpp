@@ -21,6 +21,7 @@ void EncryptMessage(shared_ptr<Crypt> tmp) {
         fout << tmp->GetEncrypted() << endl;
         fout.close();
         cout << "\nData was successfully written in the file!\n\n";
+        system("pause");
     }
 }
 
@@ -28,31 +29,35 @@ void Encrypting(string msg)
 {
     shared_ptr<Crypt> method = nullptr;
     int actionSubBottom = 1;
-    OptionsSubBottom();
-    actionSubBottom = GetInt(">>");
-    switch (actionSubBottom) {
-    case SubBottomMenu::caesar:
-        EncryptMessage(make_shared<Caesar>(msg));
-        break;
+    
+    while (actionSubBottom != SubBottomMenu::backToBottom) {
+        OptionsSubBottom();
+        actionSubBottom = GetInt(">>");
+        switch (actionSubBottom) {
+        case SubBottomMenu::caesar:
+            EncryptMessage(make_shared<Caesar>(msg));
+            return;
 
-    case SubBottomMenu::atbash:
-        EncryptMessage(make_shared<Atbash>(msg));
-        break;
+        case SubBottomMenu::atbash:
+            EncryptMessage(make_shared<Atbash>(msg));
+            return;
 
-    case SubBottomMenu::replace:
-        EncryptMessage(make_shared<Replace>(msg));
-        break;
+        case SubBottomMenu::replace:
+            EncryptMessage(make_shared<Replace>(msg));
+            return;
 
-    case SubBottomMenu::backToBottom:
-        system("cls");
-        Task();
-        Fio();
-        break;
+        case SubBottomMenu::backToBottom:
+            system("cls");
+            Task();
+            Fio();
+            break;
 
-    default:
-        IncorrectOption();
-        break;
+        default:
+            IncorrectOption();
+            break;
+        }
     }
+   
 }
 
 bool CheckMsg(string msg) {
@@ -76,26 +81,32 @@ void Decrypting(string msg)
 
     shared_ptr<Crypt> method = nullptr;
     fstream fout;
-
-    regex pattern1("L[0-9a-f]{2}", regex_constants::icase), pattern2("C[0-9a-f]{2}", regex_constants::icase);
-    if (regex_search(msg, pattern1) || regex_search(msg, pattern2)) method = make_shared<Replace>(msg);
-
-    else {
-        keyD = GetInt("\nEnter a key for decrypting. If the message don't require any, enter 0:\n>>");
-
-        if (keyD != 0) method = make_shared<Caesar>(msg);
-        else method = make_shared<Atbash>(msg);
+    char code = msg[0];
+    switch (code) {
+    case '1':
+        method = make_shared<Caesar>(msg);
+        break;
+    case '2':
+        method = make_shared<Atbash>(msg);
+        break;
+    case '3':
+        method = make_shared<Replace>(msg);
+        break;
     }
 
     cout << endl << method->GetName() << endl;
     cout << "Encrypted message:" << endl << method->GetEncrypted() << endl << endl;
+    if (code == '1') {
+        keyD = GetInt("Enter a key for decrypting:\n>>");
+    }
     method->Decrypt(keyD);
     cout << "Decrypted message:" << endl << method->GetDecrypted() << endl;
     
-    if (SaveResults("Do you want to save decrypted message in the file") == 'y') {
+    if (SaveResults("\nDo you want to save decrypted message in the file") == 'y') {
         OpenFile(WorkWithFiles::output, fout);
         fout << method->GetDecrypted()<<endl;
         fout.close();
         cout << "\nData was successfully written in the file!\n\n";
+        system("pause");
     }
 }

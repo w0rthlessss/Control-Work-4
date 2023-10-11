@@ -1,7 +1,7 @@
 #include "InputOutputController.h"
+#include <io.h>
+#include <cerrno>
 #include <filesystem>
-
-using namespace filesystem;
 
 char SaveResults(string msg)
 {
@@ -20,20 +20,24 @@ char SaveResults(string msg)
 void OpenFile(int option, fstream& file)
 {
 	string name = "";
-	error_code ec;
 	if (option == WorkWithFiles::input) {
 		do {
-			name = GetLine("\nEnter the name of file with data. Example: students.txt\n");
-			file.open(name, ios::in);
-			if (!file.is_open()) {
-				cout << "\nError opening file. Make sure, that file exists!\n";
-				continue;
-			}
+			name = GetLine("\nEnter the name of file with data. Example: testFile.txt\n");
 
-			if (!is_regular_file(name, ec)) {
-				cout << "\nAdress contains forbidden value. Try another file path!\n";
-				continue;
+			if (_access(name.c_str(), 0) == 0) {
+				file.open(name.c_str(), ios::in);
 			}
+			else {
+				if (errno == ENOENT) {
+					cout << "\nError opening file. Make sure, that file exists!\n";
+					continue;
+				}
+				else {
+					cout << "\nAdress contains forbidden value!\n";
+					continue;
+				}
+			}
+			
 			return;
 		} while (true);
 
@@ -43,15 +47,22 @@ void OpenFile(int option, fstream& file)
 		do {
 			name = GetLine("\nEnter the name of file where results will be stored.\nExample: results.txt\n\n");
 
-			if (exists(name)) {
-				if (SaveResults("\nFile exists. Do you want to overwrite current data in the file") == 'n') continue;
+			if (_access(name.c_str(), 0) == 0) {
+
+				if (filesystem::exists(name)) {
+					if (SaveResults("\nFile exists. Do you want to overwrite current data in the file") == 'n') continue;
+				}
+
+				file.open(name.c_str(), ios::out);
 			}
-
-			file.open(name, ios::out | ios::trunc);
-
-			if (!is_regular_file(name, ec)) {
-				cout << "\nAdress contains forbidden value. Try another file path!\n";
-				continue;
+			else {
+				if (errno == ENOENT) {
+					file.open(name.c_str(), ios::out);
+				}
+				else {
+					cout << "\nAdress contains forbidden value!\n";
+					continue;
+				}
 			}
 
 			return;
@@ -65,5 +76,15 @@ string FileInput(fstream& fin)
 	string tmp = "", res ="";
 	while (getline(fin, tmp)) if (!tmp.empty()) res += tmp + '\n';
 	fin.close();
+	return res;
+}
+
+string ConsoleInput(string msg)
+{
+	cout << msg;
+	string tmp = "tmp", res = "";
+	while (getline(cin, tmp) && !tmp.empty()) {
+		cout << ">>"; res += tmp + '\n';
+	}
 	return res;
 }

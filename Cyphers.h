@@ -37,7 +37,7 @@ public:
 		decrypted = "";
 	}
 
-	Crypt(string s) {original = s;}
+	Crypt(string s) { original = s; encrypted = s; }
 
 	virtual ~Crypt() = default;
 
@@ -66,7 +66,7 @@ private:
 	uc CryptLetter(uc c, int key, int l, int r) {
 		uc tmp = '\0';
 		if (tolower(c) + key < l) {
-			tmp = uc(r - (l - (tolower(c) + key))+1);
+			tmp = uc(r - (l - (tolower(c) + key)) +1);
 		}
 		else if (tolower(c) + key > r) {
 			tmp = uc(l + (tolower(c) + key - r) - 1);
@@ -77,9 +77,9 @@ private:
 		else return tmp;
 	}
 
-	string Crypt(int key, string msg) {
+	string Crypt(int key, string msg, int start) {
 		string tmp = "";
-		for (int i = 0; i < msg.length(); i++) {
+		for (int i = start; i < msg.length(); i++) {
 			uc c = msg[i];
 			if (isalpha(c)) {
 				if (!isCyrillic(tolower(c))) {
@@ -105,12 +105,12 @@ public:
 
 	virtual void Encrypt(int k) override{
 		keyE = k;
-		encrypted = Crypt(k, original);
+		encrypted = '1' + Crypt(k, original, 0);
 	}
 
 	virtual void Decrypt(int k) override{
 		keyD = k;
-		decrypted = Crypt(-k, encrypted);
+		decrypted = Crypt(-k, encrypted, 1);
 	}
 
 	virtual void ShowInfo() override {
@@ -118,59 +118,6 @@ public:
 		cout << "Example:\nKey = 3\nOriginal text = ABCD\nEncrypted text = DEFG\n\n";
 	}
 };
-
-
-//class Vigenere : public Crypt {
-//private:
-//	 
-//	uc CryptLetter(bool encrypt, uc c, uc k, int l, int alphSize) {
-//		uc tmp = '\0';
-//		
-//		if (encrypt)  tmp = uc((tolower(c) + tolower(k) - 2 * l) % alphSize + l);
-//		else  tmp = uc((tolower(c) - tolower(k) + alphSize) % alphSize + l);
-//
-//		if (isUpper(c)) return uc(toupper(tmp));
-//		else return tmp;
-//	}
-//
-//	string Crypt(string key, string msg, bool encrypt) {
-//		string tmp = "";
-//		for (int i = 0, j = 0; i < msg.length(); i++) {
-//			uc c = msg[i];
-//			uc k = key[j];
-//			if (isalpha(c)) {
-//				if (!isCyrillic(tolower(c))) {
-//					tmp += CryptLetter(encrypt, c, k, AlphabetBorders::lLower, 26);
-//					j = (j + 1) % key.length();
-//				}
-//				else {
-//					Check(c);
-//					Check(k);
-//					tmp += CryptLetter(encrypt, c, k, AlphabetBorders::cLower, 32);
-//					j = (j + 1) % key.length();
-//				}
-//			}
-//			else tmp += c;
-//		}
-//		return tmp;
-//	}
-//
-//public:
-//
-//	virtual ~Vigenere() = default;
-//
-//	Vigenere(string s) { name = "<<Vigenere cypher>>"; original = s; encrypted = s; }
-//
-//	void Encrypt(string key) {
-//		encrypted = Crypt(key, original, true);
-//	}
-//
-//	void Decrypt(string key) {
-//		decrypted = Crypt(key, encrypted, false);
-//	}
-//	
-//};
-
 
 class Atbash : public Crypt {
 private:
@@ -182,9 +129,9 @@ private:
 		else return tmp;
 	}
 
-	string Crypt(string msg) {
+	string Crypt(string msg, int start) {
 		string tmp = "";
-		for (int i = 0; i < msg.length(); i++) {
+		for (int i = start; i < msg.length(); i++) {
 			uc c = msg[i];
 			if (isalpha(tolower(c))) {
 				if (!isCyrillic(tolower(c))) tmp += CryptLetter(c, AlphabetBorders::lLower, AlphabetBorders::lUpper);
@@ -207,12 +154,12 @@ public:
 
 	virtual void Encrypt(int k) override{
 		keyE = k;
-		encrypted = Crypt(original);
+		encrypted = '2' + Crypt(original, 0);
 	}
 
 	virtual void Decrypt(int k) override{
 		keyD = k;
-		decrypted = Crypt(encrypted);
+		decrypted = Crypt(encrypted, 1);
 	}
 
 	virtual void ShowInfo() override {
@@ -246,7 +193,7 @@ private:
 	}
 
 	string EncryptMessage(string msg) {
-		string tmp = "";
+		string tmp = "3";
 		for (int i = 0; i < msg.length(); i++) {
 			uc c = msg[i];
 			if (isalpha(tolower(c))) {
@@ -259,9 +206,9 @@ private:
 		return tmp;
 	}
 
-	string DecryptMessage(string msg) {
+	string DecryptMessage(string msg, int start) {
 		string tmp = "", code ="";
-		for (int i = 0; i < msg.length() - 2; i++) {
+		for (size_t i = start; i < msg.length() - 2; i++) {
 			uc c = msg[i];
 			code += msg[i + 1]; code += msg[i + 2];
 			switch (c) {
@@ -302,7 +249,7 @@ public:
 
 	virtual void Decrypt(int k) override{
 		keyD = k;
-		decrypted = DecryptMessage(encrypted);
+		decrypted = DecryptMessage(encrypted, 1);
 	}
 
 	virtual void ShowInfo() override {

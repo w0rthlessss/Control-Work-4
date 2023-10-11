@@ -17,14 +17,14 @@ void WorkWithConsole()
 		switch (actionBottom) {
 
 		case BottomMenu::encrypt:
-			msg = GetLine("\n\nEnter a message that must be encrypted:\n");
+			msg = ConsoleInput("\n\nEnter a message that must be encrypted. Press Enter 2 times to confirm\n\n>>");
 			Encrypting(msg);
-			break;
+			return;
 
 		case BottomMenu::decrypt:
-			msg = GetLine("\n\nEnter a message that must be decrypted:\n");
+			msg = ConsoleInput("\n\nEnter a message that must be decrypted. Press Enter 2 times to confirm\n\n>>");
 			Decrypting(msg);
-			break;
+			return;
 
 		case BottomMenu::back:
 			system("cls");
@@ -51,13 +51,13 @@ void WorkWithFile()
 			OpenFile(WorkWithFiles::input, fin);
 			msg = FileInput(fin);
 			Encrypting(msg);
-			break;
+			return;
 
 		case BottomMenu::decrypt:
 			OpenFile(WorkWithFiles::input, fin);
 			msg = FileInput(fin);
 			Decrypting(msg);
-			break;
+			return;
 
 		case BottomMenu::back:
 			system("cls");

@@ -9,8 +9,6 @@ void OptionsBottom();
 
 void OptionsSubBottom();
 
-void SaveOptions();
-
 void Task();
 
 void IncorrectOption();

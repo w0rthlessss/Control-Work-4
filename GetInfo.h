@@ -24,5 +24,4 @@ using namespace std;
 void IgnoreLine();
 int GetInt(string s);
 string GetLine(string s);
-string GetString(string s);
 char GetChar(string s);
